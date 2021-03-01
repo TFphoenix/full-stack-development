@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  hidePassword = true;
 
-  constructor() { }
+  constructor(private readonly _authService: AuthService, private readonly _router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  login() {
+    this._authService.isUserAuthenticated = true;
+    this._router.navigate(['/']);
   }
-
 }
