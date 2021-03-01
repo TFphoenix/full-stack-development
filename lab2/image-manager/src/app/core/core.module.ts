@@ -8,6 +8,11 @@ import { HomeComponent } from './components/home/home.component';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
 import { EmptyLayoutComponent } from './layouts/empty-layout/empty-layout.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { LoginLogoutGuard } from './guards/login-logout/login-logout.guard';
 
 @NgModule({
   declarations: [
@@ -16,10 +21,15 @@ import { HeaderComponent } from './components/header/header.component';
     MainLayoutComponent,
     EmptyLayoutComponent,
     HeaderComponent,
+    LogoutComponent,
+    LoginComponent,
   ],
   providers: [
     // services
+    AuthService,
     // guards
+    AuthGuard,
+    LoginLogoutGuard,
     // etc
   ],
   imports: [
