@@ -17,7 +17,7 @@ export class UploadComponent implements OnInit {
     this.isImageUploaded = false;
   }
 
-  onUploadClicked(event) {
+  onUploadClicked() {
     this.fileInputElement.nativeElement.click();
   }
 
