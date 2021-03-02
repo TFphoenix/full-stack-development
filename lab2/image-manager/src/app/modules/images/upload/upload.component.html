@@ -1,8 +1,9 @@
 <div class="container">
-  <button class="upload-button" mat-raised-button color="primary">
+  <button type="file" (click)="onUploadClicked($event)" class="upload-button" mat-raised-button color="primary">
     <mat-icon>upload</mat-icon>
     <span>Upload</span>
   </button>
+  <input #fileInput type="file" (change)="onImageUpload($event)" hidden />
 
-  <img class="image box-shadow-center" src="./assets/images/profile.svg" alt="Profile" />
+  <img class="image box-shadow-center" [hidden]="!isImageUploaded" [src]="imageUrl" alt="Uploaded Image" />
 </div>
