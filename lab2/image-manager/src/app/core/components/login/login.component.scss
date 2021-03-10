@@ -1,5 +1,6 @@
 $image-big: 320px;
 $image-small: 200px;
+$min-width-form: 360px;
 
 #background {
   position: fixed;
@@ -33,12 +34,15 @@ $image-small: 200px;
     .container {
       display: grid;
       grid-template-areas: 'user form';
-      padding: 20px;
+      justify-content: center;
+      align-content: center;
+      gap: 60px;
 
       height: 100%;
 
       .col-user {
         grid-area: user;
+        padding: 32px 32px 32px 64px;
 
         .image {
           width: $image-big;
@@ -50,19 +54,18 @@ $image-small: 200px;
       .col-form {
         grid-area: form;
 
-        min-width: 360px;
-        height: 100%;
+        min-width: $min-width-form;
+        width: 90%;
 
         form {
-          width: 100%;
-          padding: 32px 16px;
+          padding: 32px;
 
           background-color: #007991;
           border-radius: 8px;
 
           h1 {
             font-size: 3em;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             margin-bottom: 48px;
             color: white;
           }
@@ -87,7 +90,6 @@ $image-small: 200px;
           }
 
           a {
-            margin-top: 32px;
             color: #69f0ae;
           }
         }
@@ -96,15 +98,43 @@ $image-small: 200px;
   }
 }
 
-@media (max-width: 1000px) {
+/*
+@media (max-width: 560px) {
   #background #login-container .container {
     grid-template-areas:
       'user'
       'form';
   }
+  #background #login-container {
+    // width: 100%;
+  }
+  #background #login-container .container .col-user .image {
+    width: $image-small / 2;
+    height: $image-small / 2;
+    border-radius: $image-small / 4;
+  }
+}
+*/
+
+@media (min-width: 561px) and (max-width: 1080px) {
+  #background #login-container .container {
+    grid-template-areas:
+      'user'
+      'form';
+  }
+
   #background #login-container .container .col-user .image {
     width: $image-small;
     height: $image-small;
     border-radius: $image-small / 2;
+  }
+
+  #background #login-container .container .col-user {
+    padding: 0px;
+    margin: auto;
+  }
+
+  #background #login-container .container .col-form {
+    width: $min-width-form;
   }
 }
