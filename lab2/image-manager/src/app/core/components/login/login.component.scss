@@ -1,3 +1,6 @@
+$image-big: 320px;
+$image-small: 200px;
+
 #background {
   position: fixed;
   padding: 0;
@@ -28,36 +31,29 @@
     border-radius: 8px;
 
     .container {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-      align-items: center;
+      display: grid;
+      grid-template-areas: 'user form';
+      padding: 20px;
 
       height: 100%;
 
       .col-user {
+        grid-area: user;
+
         .image {
-          width: 320px;
-          height: 320px;
+          width: $image-big;
+          height: $image-big;
           border-radius: 160px;
         }
       }
 
       .col-form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        grid-area: form;
 
         min-width: 360px;
         height: 100%;
 
         form {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-
           width: 100%;
           padding: 32px 16px;
 
@@ -97,5 +93,18 @@
         }
       }
     }
+  }
+}
+
+@media (max-width: 1000px) {
+  #background #login-container .container {
+    grid-template-areas:
+      'user'
+      'form';
+  }
+  #background #login-container .container .col-user .image {
+    width: $image-small;
+    height: $image-small;
+    border-radius: $image-small / 2;
   }
 }
