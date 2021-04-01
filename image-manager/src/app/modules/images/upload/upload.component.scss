@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 32px;
+
+  .upload-button {
+    margin-bottom: 64px;
+    width: 512px;
+    height: 64px;
+  }
+
+  .image {
+    max-height: 512px;
+    max-width: 512px;
+  }
+}

@@ -1,0 +1,31 @@
+<div id="background">
+  <div id="login-container">
+    <div class="container">
+      <div class="col-user"><img class="image box-shadow-center" src="./assets/images/profile.svg" alt="Profile" /></div>
+      <div class="col-form">
+        <form class="box-shadow-center">
+          <h1>User Login</h1>
+          <mat-form-field class="field" appearance="outline" color="accent">
+            <mat-label>Email</mat-label>
+            <input matInput />
+          </mat-form-field>
+          <mat-form-field class="field" appearance="outline" color="accent">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword"
+            >
+              <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </mat-form-field>
+          <button mat-raised-button color="accent" (click)="login()">Login</button>
+          <a href="/">Forgot Username/Password?</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
