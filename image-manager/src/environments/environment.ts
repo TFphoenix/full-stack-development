@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   services: {
-    api: 'http://localhost:3000/api/'
+    api: 'http://localhost:8080/api/'
   }
 };
 
