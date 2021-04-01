@@ -20,7 +20,7 @@ export class AuthService {
         this.isUserAuthenticated = true;
 
         // this.token = data.token;
-        // this.router.navigate(['table']);
+        // this.router.navigate(['table']);//TODO
       },
       err => {
         alert(err.message);
@@ -29,16 +29,17 @@ export class AuthService {
     );
   }
 
+  logout() {
+    this.isUserAuthenticated = false;
+    // this.router.navigate(['table']);//TODO
+  }
+
   private loginUser(body: any): Observable<any> {
-    return this._requestService.post('login', body).pipe(
+    return this._requestService.post(Constants.ApiEndpoints.login, body).pipe(
       tap(data => {
         console.log(data);
         this.userData = data;
       })
     );
-  }
-
-  logout() {
-    this.isUserAuthenticated = false;
   }
 }
