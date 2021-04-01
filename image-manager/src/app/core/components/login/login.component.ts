@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -9,13 +10,16 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
   hidePassword = true;
+  email: string = '';
+  password: string = '';
 
   constructor(private readonly _authService: AuthService, private readonly _router: Router) {}
 
   ngOnInit(): void {}
 
-  login() {
-    this._authService.isUserAuthenticated = true;
-    this._router.navigate(['/']);
+  login(loginForm: NgForm) {
+    if (loginForm.valid) {
+      this._authService.login(loginForm.value);
+    }
   }
 }

@@ -14,6 +14,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { LoginLogoutGuard } from './guards/login-logout/login-logout.guard';
 import { AuthService } from './services/auth/auth.service';
 import { RequestService } from './services/request/request.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { RequestService } from './services/request/request.service';
     LoginLogoutGuard
     // etc
   ],
-  imports: [CommonModule, SharedModule, MaterialModule, RouterModule, HttpClientModule],
+  imports: [CommonModule, SharedModule, MaterialModule, RouterModule, HttpClientModule, FormsModule],
   exports: [MaterialModule, HomeComponent]
 })
 export class CoreModule {

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Constants } from 'src/app/shared/constants';
 import { RequestService } from '../request/request.service';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   isUserAuthenticated: boolean = false;
   userData: any;
 
-  constructor(private readonly _requestService: RequestService) {}
+  constructor(private readonly _requestService: RequestService, private readonly _router: Router) {}
 
   login(loginData: any) {
     this.loginUser(loginData).subscribe(
@@ -19,8 +20,7 @@ export class AuthService {
         localStorage.setItem(Constants.LocalStorage.authToken, data.token);
         this.isUserAuthenticated = true;
 
-        // this.token = data.token;
-        // this.router.navigate(['table']);//TODO
+        this._router.navigate(['/']);
       },
       err => {
         alert(err.message);
@@ -31,7 +31,7 @@ export class AuthService {
 
   logout() {
     this.isUserAuthenticated = false;
-    // this.router.navigate(['table']);//TODO
+    this._router.navigate(['/login']);
   }
 
   private loginUser(body: any): Observable<any> {
