@@ -10,9 +10,9 @@ import { EmptyLayoutComponent } from './layouts/empty-layout/empty-layout.compon
 import { HeaderComponent } from './components/header/header.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { LoginComponent } from './components/login/login.component';
-import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { LoginLogoutGuard } from './guards/login-logout/login-logout.guard';
+import { AuthService } from './services/auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -22,24 +22,18 @@ import { LoginLogoutGuard } from './guards/login-logout/login-logout.guard';
     EmptyLayoutComponent,
     HeaderComponent,
     LogoutComponent,
-    LoginComponent,
+    LoginComponent
   ],
   providers: [
     // services
     AuthService,
     // guards
     AuthGuard,
-    LoginLogoutGuard,
+    LoginLogoutGuard
     // etc
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MaterialModule,
-    RouterModule,
-    HttpClientModule,
-  ],
-  exports: [MaterialModule, HomeComponent],
+  imports: [CommonModule, SharedModule, MaterialModule, RouterModule, HttpClientModule],
+  exports: [MaterialModule, HomeComponent]
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() core: CoreModule) {
