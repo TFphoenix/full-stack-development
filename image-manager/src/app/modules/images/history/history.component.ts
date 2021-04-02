@@ -1,27 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  size: number;
-  result: number;
-  download: string;
-  position: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, size: 1, name: 'Hydrogen', result: 1.0079, download: 'H' },
-  { position: 2, size: 2, name: 'Helium', result: 4.0026, download: 'He' },
-  { position: 3, size: 3, name: 'Lithium', result: 6.941, download: 'Li' },
-  { position: 4, size: 4, name: 'Beryllium', result: 9.0122, download: 'Be' },
-  { position: 5, size: 5, name: 'Boron', result: 10.811, download: 'B' },
-  { position: 6, size: 6, name: 'Carbon', result: 12.0107, download: 'C' },
-  { position: 7, size: 7, name: 'Nitrogen', result: 14.0067, download: 'N' },
-  { position: 8, size: 8, name: 'Oxygen', result: 15.9994, download: 'O' },
-  { position: 9, size: 9, name: 'Fluorine', result: 18.9984, download: 'F' },
-  { position: 10, size: 10, name: 'Neon', result: 20.1797, download: 'Ne' }
-];
+import { ImagesRequestService } from 'src/app/core/services/images-request/images-request.service';
+import { IImage } from 'src/app/shared/interfaces/image.interface';
 
 @Component({
   selector: 'app-history',
@@ -30,12 +11,16 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class HistoryComponent implements OnInit {
   displayedColumns: string[] = ['select', 'name', 'size', 'result', 'download'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  dataSource = new MatTableDataSource<IImage>([]);
+  selection = new SelectionModel<IImage>(true, []);
 
-  constructor() {}
+  constructor(private readonly _imagesRequestService: ImagesRequestService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._imagesRequestService.getAllImages().subscribe(images => {
+      this.dataSource = new MatTableDataSource<IImage>(images);
+    });
+  }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -50,10 +35,10 @@ export class HistoryComponent implements OnInit {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: IImage): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.id + 1}`;
   }
 }
