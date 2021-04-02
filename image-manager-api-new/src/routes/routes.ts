@@ -1,5 +1,5 @@
-import { ImageController } from "../controller/image-controller";
-import { UserController } from "../controller/user-controller";
+import { ImageController } from "../controllers/image-controller";
+import { UserController } from "../controllers/user-controller";
 
 export const Routes = [
   // USERS

@@ -1,10 +1,10 @@
 import { getRepository } from "typeorm";
-import { Image } from "../entity/Image";
+import { Image } from "../entities/Image";
 import { NextFunction, Request, Response } from "express";
 import { STATUS_CODES } from "../common/status-codes";
 import * as tf from "@tensorflow/tfjs-node";
-import { MnistData } from "../util/data";
-import { getModel, train } from "../util/ml";
+import { MnistData } from "../utils/data";
+import { getModel, train } from "../utils/ml";
 
 export class ImageController {
   private imageRepository = getRepository(Image);
