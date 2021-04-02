@@ -6,7 +6,7 @@ import { STATUS_CODES } from "./shared/status-codes";
 import { Application, Request, Response, NextFunction } from "express";
 
 import { Routes } from "./routes/routes";
-import { checkBearer } from "./auth/check-bearer";
+import { checkBearer } from "./util/check-bearer";
 import { env } from "./env";
 
 const cors = require("cors");
