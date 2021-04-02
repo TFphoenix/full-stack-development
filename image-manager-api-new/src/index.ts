@@ -9,10 +9,13 @@ import { Routes } from "./routes/routes";
 import { checkBearer } from "./auth/check-bearer";
 import { env } from "./env";
 
+const cors = require("cors");
+
 createConnection()
   .then(async (connection) => {
     let app: Application;
     app = express();
+    app.use(cors());
 
     // middleware
     app.use(express.json());

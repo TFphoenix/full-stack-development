@@ -9,11 +9,11 @@ export class UserController {
   private userRepository = getRepository(User);
 
   // POST
-  async loginByCredentials(req: Request, res: Response, next: NextFunction): Promise<Error | string | null> {
+  async login(req: Request, res: Response, next: NextFunction): Promise<Error | string | null> {
     try {
-      const { username, password } = req.body;
+      const { email, password } = req.body;
       const user = this.userRepository.findOne({
-        where: { username: username, password: password },
+        where: { email: email, password: password },
       });
       user
         .then((user) => {

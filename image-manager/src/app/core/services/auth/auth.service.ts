@@ -23,7 +23,7 @@ export class AuthService {
         this._router.navigate(['/']);
       },
       err => {
-        alert(err.message);
+        alert(err.message); // TODO: Display toastr alert
         this.isUserAuthenticated = false;
       }
     );
@@ -37,7 +37,7 @@ export class AuthService {
   private loginUser(body: any): Observable<any> {
     return this._requestService.post(Constants.ApiEndpoints.login, body).pipe(
       tap(data => {
-        console.log(data);
+        console.log(data); //TODO: Save JWT to localStorage
         this.userData = data;
       })
     );

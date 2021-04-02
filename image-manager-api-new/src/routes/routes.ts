@@ -2,12 +2,14 @@ import { ImageController } from "../controller/image-controller";
 import { UserController } from "../controller/user-controller";
 
 export const Routes = [
+  // USERS
   {
     method: "post",
     route: "/users/login",
     controller: UserController,
-    action: "loginByCredentials",
+    action: "login",
   },
+  // IMAGES
   {
     method: "get",
     route: "/images",

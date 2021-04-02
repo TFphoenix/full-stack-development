@@ -4,7 +4,7 @@ export class Constants {
   };
 
   public static readonly ApiEndpoints = {
-    login: 'login',
+    login: 'users/login',
     logout: 'logout'
   };
 }
