@@ -4,12 +4,12 @@ import { NextFunction, Request, Response } from "express";
 import { STATUS_CODES } from "../common/status-codes";
 import * as tf from "@tensorflow/tfjs-node";
 import { MnistData } from "../util/data";
-import { Tensor } from "@tensorflow/tfjs-node";
+import { getModel, train } from "../util/ml";
 
 export class ImageController {
   private imageRepository = getRepository(Image);
 
-  // GET/:id
+  // GET images/:id
   async getImageById(req: Request, res: Response, next: NextFunction): Promise<Image | null> {
     try {
       const image = await this.imageRepository.findOne(req.params.id);
@@ -23,7 +23,7 @@ export class ImageController {
     }
   }
 
-  // GET
+  // GET images
   async getAllImages(req: Request, res: Response, next: NextFunction): Promise<Image[] | null> {
     try {
       return await this.imageRepository.find();
@@ -32,7 +32,7 @@ export class ImageController {
     }
   }
 
-  // POST
+  // POST images
   async saveImages(req: Request, res: Response, next: NextFunction): Promise<Image[]> {
     try {
       const body = req.body;
@@ -42,7 +42,7 @@ export class ImageController {
     }
   }
 
-  // POST
+  // POST images/evaluate
   async evaluateImage(req: Request, res: Response, next: NextFunction) {
     try {
       const data = new MnistData();
@@ -55,9 +55,21 @@ export class ImageController {
       const labels = testData.labels.argMax(-1);
       const preds = model.predict(testxs);
       testxs.dispose();
-      res.status(200).send(preds + "\n" + labels);
+      res.status(STATUS_CODES.OK).send(preds + "\n" + labels);
     } catch (err) {
       console.log(err);
     }
+  }
+
+  // POST images/train
+  async trainImage(req: Request, res: Response, next: NextFunction) {
+    const data = new MnistData();
+    await data.load();
+    const model = getModel();
+    await train(model, data);
+    model.save(
+      "file://D:/OneDrive/Programming Projects/University/FSD - Full Stack Development/full-stack-development/image-manager-api-new/assets/ml/trained/model.json"
+    );
+    res.send(STATUS_CODES.OK);
   }
 }

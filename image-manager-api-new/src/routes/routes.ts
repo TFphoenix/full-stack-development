@@ -36,6 +36,13 @@ export const Routes = [
     route: "/images/evaluate",
     guard: false,
     controller: ImageController,
-    action: "evaluateImage"
-  }
+    action: "evaluateImage",
+  },
+  {
+    method: "post",
+    route: "/images/train",
+    guard: false,
+    controller: ImageController,
+    action: "trainImage",
+  },
 ];
