@@ -5,6 +5,7 @@ import { STATUS_CODES } from "../common/status-codes";
 import * as tf from "@tensorflow/tfjs-node";
 import { MnistData } from "../utils/data";
 import { getModel, train } from "../utils/ml";
+const path = require('path');
 
 export class ImageController {
   private imageRepository = getRepository(Image);
@@ -47,8 +48,11 @@ export class ImageController {
     try {
       const data = new MnistData();
       await data.load();
+      console.log('Evaluate');
+      const modelPath = 'file://' + path.join(__dirname, '../../') + 'assets\\ml\\default\\model.json';
+      console.log(modelPath);
       const model = await tf.loadLayersModel(
-        "file://D:/OneDrive/Programming Projects/University/FSD - Full Stack Development/full-stack-development/image-manager-api-new/assets/ml/default/model.json"
+        modelPath
       );
       const testData = data.nextTestBatch(1);
       const testxs = testData.xs.reshape([1, 28, 28, 1]);
@@ -75,8 +79,11 @@ export class ImageController {
         trainResults = results;
       });
 
+      const modelPath = 'file://' + path.join(__dirname, '../../') + 'assets\\ml\\trained\\model.json';
+      console.log(modelPath);
+
       model.save(
-        "file://D:/OneDrive/Programming Projects/University/FSD - Full Stack Development/full-stack-development/image-manager-api-new/assets/ml/trained/model.json"
+        modelPath
       );
       res.status(STATUS_CODES.OK).send(trainResults);
     } catch (err) {
