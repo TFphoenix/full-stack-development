@@ -59,7 +59,7 @@ export class ImageController {
       const label = testData.labels.argMax(-1);
       const probabilities = model.predict(testxs);
       testxs.dispose();
-      res.status(STATUS_CODES.OK).send(`Class probabilities: ${probabilities}\nLabel: ${label}`);
+      res.status(STATUS_CODES.OK).send(`Class probabilities: ${probabilities}\n Predicted label: ${label}`);
     } catch (err) {
       console.log(err);
       res.sendStatus(STATUS_CODES.SERVER_ERROR);
