@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Constants } from 'src/app/shared/constants';
+import { catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +15,47 @@ export class RequestService {
     'Content-Type': 'application/json'
   });
 
-  constructor(private readonly _http: HttpClient) {}
+  constructor(private readonly _http: HttpClient, private readonly _router: Router) {}
 
   get<T = any>(url: string): Observable<any> {
     const headers = this.getHeaders();
 
-    return this._http.get<T>(this._baseUrl + url, {
-      headers: headers,
-      reportProgress: true
-    });
+    return this._http
+      .get<T>(this._baseUrl + url, {
+        headers: headers,
+        reportProgress: true
+      })
+      .pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            localStorage.removeItem(Constants.LocalStorage.authToken);
+            this._router.navigate(['/login']);
+            return of(null);
+          }
+        })
+      );
   }
 
   post<T = any>(url: string, body: any): Observable<any> {
+    const headers = this.getHeaders();
+
+    return this._http
+      .post<T>(this._baseUrl + url, body, {
+        headers: headers,
+        reportProgress: true
+      })
+      .pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            localStorage.removeItem(Constants.LocalStorage.authToken);
+            this._router.navigate(['/login']);
+            return of(null);
+          }
+        })
+      );
+  }
+
+  postUnhandled<T = any>(url: string, body: any): Observable<any> {
     const headers = this.getHeaders();
 
     return this._http.post<T>(this._baseUrl + url, body, {
@@ -36,19 +67,39 @@ export class RequestService {
   put<T = any>(url: string, body: any): Observable<any> {
     const headers = this.getHeaders();
 
-    return this._http.put<T>(this._baseUrl + url, body, {
-      headers: headers,
-      reportProgress: true
-    });
+    return this._http
+      .put<T>(this._baseUrl + url, body, {
+        headers: headers,
+        reportProgress: true
+      })
+      .pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            localStorage.removeItem(Constants.LocalStorage.authToken);
+            this._router.navigate(['/login']);
+            return of(null);
+          }
+        })
+      );
   }
 
   patch<T = any>(url: string, body: any): Observable<any> {
     const headers = this.getHeaders().set('X-HTTP-Method-Override', 'PATCH');
 
-    return this._http.post<T>(this._baseUrl + url, body, {
-      headers: headers,
-      reportProgress: true
-    });
+    return this._http
+      .post<T>(this._baseUrl + url, body, {
+        headers: headers,
+        reportProgress: true
+      })
+      .pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            localStorage.removeItem(Constants.LocalStorage.authToken);
+            this._router.navigate(['/login']);
+            return of(null);
+          }
+        })
+      );
   }
 
   delete<T = any>(url: string, ids: string[] = null): Observable<any> {
@@ -71,10 +122,20 @@ export class RequestService {
       }
     }
 
-    return this._http.delete<T>(url, {
-      headers: headers,
-      reportProgress: true
-    });
+    return this._http
+      .delete<T>(url, {
+        headers: headers,
+        reportProgress: true
+      })
+      .pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            localStorage.removeItem(Constants.LocalStorage.authToken);
+            this._router.navigate(['/login']);
+            return of(null);
+          }
+        })
+      );
   }
 
   private getHeaders() {

@@ -38,12 +38,12 @@ export class AuthService {
 
   logout() {
     this.isUserAuthenticated = false;
-    localStorage.setItem(Constants.LocalStorage.authToken, '');
+    localStorage.removeItem(Constants.LocalStorage.authToken);
     this._router.navigate(['/login']);
   }
 
   private loginUser(body: any): Observable<any> {
-    return this._requestService.post(Constants.ApiEndpoints.login, body).pipe(
+    return this._requestService.postUnhandled(Constants.ApiEndpoints.login, body).pipe(
       tap(responseToken => {
         localStorage.setItem(Constants.LocalStorage.authToken, responseToken);
         this.userData = responseToken;
