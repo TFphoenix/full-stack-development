@@ -1,0 +1,45 @@
+{
+   "name": "image-manager-api",
+   "version": "1.0.0",
+   "description": "",
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "nodemon": "nodemon src/index.ts",
+      "build:tsc": "npm run type:check && tsc",
+      "ts:node:dev": "ts-node-dev src/index --watch",
+      "type:check": "tsc --noEmit --project .",
+      "start:tsc": "npm run type:check && npm run ts:node:dev",
+      "ts:node:debug": "ts-node-dev --inspect --watch -- src/index",
+      "start:debug": "npm run type:check && npm run ts:node:debug"
+   },
+   "dependencies": {
+      "@nestjs/cli": "^7.6.0",
+      "@nestjs/jwt": "^7.2.0",
+      "@nestjs/passport": "^7.1.5",
+      "@nestjs/swagger": "^4.8.0",
+      "@nestjs/typeorm": "^7.1.5",
+      "@types/bcrypt": "^3.0.0",
+      "@types/bcryptjs": "^2.4.2",
+      "@types/passport-jwt": "^3.0.5",
+      "@types/passport-local": "^1.0.33",
+      "bcrypt": "^5.0.1",
+      "dotenv": "^8.2.0",
+      "express": "^4.17.1",
+      "express-jwt": "^6.0.0",
+      "jsonwebtoken": "^8.5.1",
+      "passport": "^0.4.1",
+      "passport-jwt": "^4.0.0",
+      "passport-local": "^1.0.0",
+      "pg": "^8.5.1",
+      "reflect-metadata": "^0.1.10",
+      "swagger-ui-express": "^4.1.6",
+      "typeorm": "^0.2.31"
+   },
+   "devDependencies": {
+      "@types/jsonwebtoken": "^8.5.1",
+      "@types/node": "^8.0.29",
+      "nodemon": "^2.0.7",
+      "ts-node": "3.3.0",
+      "typescript": "3.3.3333"
+   }
+}
