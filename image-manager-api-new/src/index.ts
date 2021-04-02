@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import * as express from "express";
 import * as jwt from "express-jwt";
-import { STATUS_CODES } from "./shared/status-codes";
+import { STATUS_CODES } from "./common/status-codes";
 import { Application, Request, Response, NextFunction } from "express";
 
 import { Routes } from "./routes/routes";

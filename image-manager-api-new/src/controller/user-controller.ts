@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import { User } from "../entity/User";
 import * as jwt from "jsonwebtoken";
 import { env } from "../env";
-import { STATUS_CODES } from "../shared/status-codes";
+import { STATUS_CODES } from "../common/status-codes";
 
 export class UserController {
   private userRepository = getRepository(User);
@@ -18,13 +18,9 @@ export class UserController {
       user
         .then((user) => {
           if (user) {
-            const accessToken = jwt.sign(
-              { ...user },
-              env.TOKEN_SECRET,
-              {
-                expiresIn: "24h",
-              }
-            );
+            const accessToken = jwt.sign({ ...user }, env.TOKEN_SECRET, {
+              expiresIn: "24h",
+            });
             console.log(accessToken);
             return res.json(accessToken);
           } else {

@@ -1,9 +1,11 @@
 const OK = 200;
 const UNAUTHORIZED = 401;
+const NOT_FOUND = 404;
 const SERVER_ERROR = 500;
 
 export const STATUS_CODES = {
-   OK,
-   UNAUTHORIZED,
-   SERVER_ERROR
-}
+  OK,
+  UNAUTHORIZED,
+  SERVER_ERROR,
+  NOT_FOUND,
+};
