@@ -13,6 +13,8 @@ export class LoginLogoutGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    this._authService.checkAuthentication();
+
     // login
     if (route.url[0].path === 'login' && this._authService.isUserAuthenticated) {
       return this._router.parseUrl('/');

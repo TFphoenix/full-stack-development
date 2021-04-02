@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { RequestService } from 'src/app/core/services/request/request.service';
 
 @Component({
   selector: 'app-upload',
@@ -11,7 +12,7 @@ export class UploadComponent implements OnInit {
   imageUrl: string;
   isImageUploaded: boolean;
 
-  constructor() {}
+  constructor(private readonly _requestService: RequestService) {}
 
   ngOnInit(): void {
     this.isImageUploaded = false;

@@ -14,6 +14,14 @@ export class AuthService {
 
   constructor(private readonly _requestService: RequestService, private readonly _router: Router) {}
 
+  checkAuthentication() {
+    if (localStorage.getItem(Constants.LocalStorage.authToken)) {
+      this.isUserAuthenticated = true;
+    } else {
+      this.isUserAuthenticated = false;
+    }
+  }
+
   login(loginData: any) {
     this.loginUser(loginData).subscribe(
       data => {
@@ -30,6 +38,7 @@ export class AuthService {
 
   logout() {
     this.isUserAuthenticated = false;
+    localStorage.setItem(Constants.LocalStorage.authToken, '');
     this._router.navigate(['/login']);
   }
 
