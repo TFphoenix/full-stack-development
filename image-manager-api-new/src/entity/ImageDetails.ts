@@ -13,8 +13,8 @@ export class ImageDetails {
     size: number;
 
     @Column()
-    recognitionResult: string;
+    result: string;
 
     @Column()
-    downloadLink: string;
+    download: string;
 }

@@ -17,15 +17,18 @@ export class UserController {
       });
       user
         .then((user) => {
-          console.log(user);
           if (user) {
-            const accessToken = jwt.sign({ ...user }, env.TOKEN_SECRET, {
-              expiresIn: "24h",
-            });
+            const accessToken = jwt.sign(
+              { ...user },
+              env.TOKEN_SECRET,
+              {
+                expiresIn: "24h",
+              }
+            );
             console.log(accessToken);
             return res.json(accessToken);
           } else {
-            return res.sendStatus(401);
+            return res.sendStatus(STATUS_CODES.UNAUTHORIZED);
           }
         })
         .catch((err) => {
