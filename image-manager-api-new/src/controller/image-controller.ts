@@ -1,13 +1,13 @@
 import { getRepository } from 'typeorm';
-import { ImageDetails } from '../entity/ImageDetails';
+import { Image } from '../entity/Image';
 import { NextFunction, Request, Response } from 'express';
 import { STATUS_CODES } from '../shared/status-codes';
 
 export class ImageController {
-  private imageRepository = getRepository(ImageDetails);
+  private imageRepository = getRepository(Image);
 
   // GET/:id
-  async getImageById(imageId: number): Promise<ImageDetails | null> {
+  async getImageById(imageId: number): Promise<Image | null> {
     return await this.imageRepository.findOne({ id: imageId });
   }
 
@@ -16,7 +16,7 @@ export class ImageController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<ImageDetails[] | null> {
+  ): Promise<Image[] | null> {
     try {
       return this.imageRepository.find();
     } catch (exception) {
@@ -29,10 +29,22 @@ export class ImageController {
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<ImageDetails[]> {
+  ): Promise<Image[]> {
     try {
       const body = req.body;
       return this.imageRepository.save(body);
+    } catch (exception) {
+      res.sendStatus(STATUS_CODES.SERVER_ERROR);
+    }
+  }
+
+  async evaluateImage(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const body = req.body;
     } catch (exception) {
       res.sendStatus(STATUS_CODES.SERVER_ERROR);
     }
