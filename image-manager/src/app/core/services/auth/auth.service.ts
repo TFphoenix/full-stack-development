@@ -17,7 +17,6 @@ export class AuthService {
   login(loginData: any) {
     this.loginUser(loginData).subscribe(
       data => {
-        localStorage.setItem(Constants.LocalStorage.authToken, data.token);
         this.isUserAuthenticated = true;
 
         this._router.navigate(['/']);
@@ -36,9 +35,9 @@ export class AuthService {
 
   private loginUser(body: any): Observable<any> {
     return this._requestService.post(Constants.ApiEndpoints.login, body).pipe(
-      tap(data => {
-        console.log(data); //TODO: Save JWT to localStorage
-        this.userData = data;
+      tap(responseToken => {
+        localStorage.setItem(Constants.LocalStorage.authToken, responseToken);
+        this.userData = responseToken;
       })
     );
   }
