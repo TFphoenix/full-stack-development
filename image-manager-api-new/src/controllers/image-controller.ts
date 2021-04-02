@@ -52,10 +52,10 @@ export class ImageController {
       );
       const testData = data.nextTestBatch(1);
       const testxs = testData.xs.reshape([1, 28, 28, 1]);
-      const labels = testData.labels.argMax(-1);
-      const preds = model.predict(testxs);
+      const label = testData.labels.argMax(-1);
+      const probabilities = model.predict(testxs);
       testxs.dispose();
-      res.status(STATUS_CODES.OK).send(preds + "\n" + labels);
+      res.status(STATUS_CODES.OK).send(`Class probabilities: ${probabilities}\nLabel: ${label}`);
     } catch (err) {
       console.log(err);
       res.sendStatus(STATUS_CODES.SERVER_ERROR);
