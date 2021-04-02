@@ -29,7 +29,7 @@ export async function train(model: any, data: any) {
   return model.fit(trainXs, trainYs, {
     batchSize: BATCH_SIZE,
     validationData: [testXs, testYs],
-    epochs: 25,
+    epochs: 20,
     shuffle: true,
     callbacks: { onBatchEnd },
   });

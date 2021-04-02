@@ -58,18 +58,30 @@ export class ImageController {
       res.status(STATUS_CODES.OK).send(preds + "\n" + labels);
     } catch (err) {
       console.log(err);
+      res.sendStatus(STATUS_CODES.SERVER_ERROR);
     }
   }
 
   // POST images/train
   async trainImage(req: Request, res: Response, next: NextFunction) {
-    const data = new MnistData();
-    await data.load();
-    const model = getModel();
-    await train(model, data);
-    model.save(
-      "file://D:/OneDrive/Programming Projects/University/FSD - Full Stack Development/full-stack-development/image-manager-api-new/assets/ml/trained/model.json"
-    );
-    res.send(STATUS_CODES.OK);
+    try {
+      const data = new MnistData();
+      await data.load();
+      const model = getModel();
+      let trainResults;
+      await train(model, data).then((results) => {
+        console.log("TRAIN FINISHED");
+        console.log(results);
+        trainResults = results;
+      });
+
+      model.save(
+        "file://D:/OneDrive/Programming Projects/University/FSD - Full Stack Development/full-stack-development/image-manager-api-new/assets/ml/trained/model.json"
+      );
+      res.status(STATUS_CODES.OK).send(trainResults);
+    } catch (err) {
+      console.log(err);
+      res.sendStatus(STATUS_CODES.SERVER_ERROR);
+    }
   }
 }
