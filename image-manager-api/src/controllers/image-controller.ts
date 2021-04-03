@@ -59,7 +59,10 @@ export class ImageController {
       const label = testData.labels.argMax(-1);
       const probabilities = model.predict(testxs);
       testxs.dispose();
-      res.status(STATUS_CODES.OK).send(`Class probabilities: ${probabilities}\n Predicted label: ${label}`);
+      console.log(probabilities.toString());
+      console.log(label.toString());
+      const predictedLabel = label.shape[0];
+      res.status(STATUS_CODES.OK).send(`Class probabilities: ${probabilities}\n Predicted label: ${predictedLabel}`);
     } catch (err) {
       console.log(err);
       res.sendStatus(STATUS_CODES.SERVER_ERROR);
@@ -73,11 +76,14 @@ export class ImageController {
       await data.load();
       const model = getModel();
       let trainResults;
-      await train(model, data).then((results) => {
-        console.log('TRAIN FINISHED');
-        console.log(results);
-        trainResults = results;
-      });
+      await train(model, data)
+        .then(
+          (results) => {
+            console.log('TRAIN FINISHED');
+            console.log(results);
+            trainResults = results;
+          }
+        );
 
       const modelPath = 'file://' + path.join(__dirname, '../../') + 'assets\\ml\\trained\\model.json';
       console.log(modelPath);
