@@ -1,10 +1,10 @@
-import { getRepository } from "typeorm";
-import { Image } from "../entities/Image";
-import { NextFunction, Request, Response } from "express";
-import { STATUS_CODES } from "../common/status-codes";
-import * as tf from "@tensorflow/tfjs-node";
-import { MnistData } from "../utils/data";
-import { getModel, train } from "../utils/ml";
+import { getRepository } from 'typeorm';
+import { Image } from '../entities/Image';
+import { NextFunction, Request, Response } from 'express';
+import { STATUS_CODES } from '../common/status-codes';
+import * as tf from '@tensorflow/tfjs-node';
+import { MnistData } from '../utils/data';
+import { getModel, train } from '../utils/ml';
 const path = require('path');
 
 export class ImageController {
@@ -14,10 +14,10 @@ export class ImageController {
   async getImageById(req: Request, res: Response, next: NextFunction): Promise<Image | null> {
     try {
       const image = await this.imageRepository.findOne(req.params.id);
-      if (!image) {
-        res.sendStatus(STATUS_CODES.NOT_FOUND);
-      } else {
+      if (image) {
         return image;
+      } else {
+        res.sendStatus(STATUS_CODES.NOT_FOUND);
       }
     } catch (exception) {
       res.sendStatus(STATUS_CODES.SERVER_ERROR);
@@ -74,7 +74,7 @@ export class ImageController {
       const model = getModel();
       let trainResults;
       await train(model, data).then((results) => {
-        console.log("TRAIN FINISHED");
+        console.log('TRAIN FINISHED');
         console.log(results);
         trainResults = results;
       });

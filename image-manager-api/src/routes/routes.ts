@@ -1,48 +1,48 @@
-import { ImageController } from "../controllers/image-controller";
-import { UserController } from "../controllers/user-controller";
+import { ImageController } from '../controllers/image-controller';
+import { UserController } from '../controllers/user-controller';
 
 export const Routes = [
   // USERS
   {
-    method: "post",
-    route: "/users/login",
+    method: 'post',
+    route: '/users/login',
     controller: UserController,
-    action: "login",
+    action: 'login',
   },
   // IMAGES
   {
-    method: "get",
-    route: "/images",
+    method: 'get',
+    route: '/images',
     guard: true,
     controller: ImageController,
-    action: "getAllImages",
+    action: 'getAllImages',
   },
   {
-    method: "get",
-    route: "/images/:id",
+    method: 'get',
+    route: '/images/:id',
     guard: true,
     controller: ImageController,
-    action: "getImageById",
+    action: 'getImageById',
   },
   {
-    method: "post",
-    route: "/images",
+    method: 'post',
+    route: '/images',
     guard: true,
     controller: ImageController,
-    action: "saveImages",
+    action: 'saveImages',
   },
   {
-    method: "post",
-    route: "/images/evaluate",
+    method: 'post',
+    route: '/images/evaluate',
     guard: false,
     controller: ImageController,
-    action: "evaluateImage",
+    action: 'evaluateImage',
   },
   {
-    method: "post",
-    route: "/images/train",
+    method: 'post',
+    route: '/images/train',
     guard: false,
     controller: ImageController,
-    action: "trainImage",
+    action: 'trainImage',
   },
 ];
