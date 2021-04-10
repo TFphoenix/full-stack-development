@@ -33,6 +33,13 @@ export const Routes = [
   },
   {
     method: 'post',
+    route: '/images/upload',
+    guard: true,
+    controller: ImageController,
+    action: 'uploadImage',
+  },
+  {
+    method: 'post',
     route: '/images/evaluate',
     guard: false,
     controller: ImageController,

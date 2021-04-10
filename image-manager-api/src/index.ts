@@ -4,6 +4,7 @@ import * as express from 'express';
 import * as jwt from 'express-jwt';
 import { STATUS_CODES } from './common/status-codes';
 import { Application, Request, Response, NextFunction } from 'express';
+import * as fileUpload from 'express-fileupload';
 
 import { Routes } from './routes/routes';
 import { checkBearer } from './utils/check-bearer';
@@ -40,6 +41,10 @@ createConnection()
       });
 
       console.log('env:', env);
+
+      app.use(fileUpload({
+        useTempFiles: false
+      }));
 
       // routes
       Routes.forEach(

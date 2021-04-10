@@ -67,7 +67,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "image-manager:build",
-			"proxyConfig": "./proxy.json"
+            "proxyConfig": "./proxy.json"
           },
           "configurations": {
             "production": {
@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "image-manager"
+  "defaultProject": "image-manager",
+  "cli": {
+    "analytics": false
+  }
 }
