@@ -48,8 +48,12 @@ export class ImageController {
   // POST images/upload
   async uploadImage(req: any, res: Response, next: NextFunction) {
     try {
+      if (!req.files) {
+        res.sendStatus(STATUS_CODES.SERVER_ERROR);
+      }
       const images = req.files;
-      const imageData = images.file.data;
+      const uploadedImage = images.file;
+      const imageData = uploadedImage.data;
       const imageArrayBuffer = toArrayBuffer(imageData);
 
       const data = new MnistData();
@@ -68,8 +72,14 @@ export class ImageController {
       console.log(probabilities.toString());
       console.log(label.toString());
       const predictedLabel = label.shape[0];
-      res.status(STATUS_CODES.OK).send(`Class probabilities: ${probabilities}\n Predicted label: ${predictedLabel}`);
-
+      return this.imageRepository.save(
+        {
+          name: uploadedImage.name,
+          size: uploadedImage.size,
+          result: predictedLabel.toString(),
+          download: 'Image was uploaded manually'
+        }
+      );
     } catch (exception) {
       res.sendStatus(STATUS_CODES.SERVER_ERROR);
     }

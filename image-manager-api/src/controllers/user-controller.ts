@@ -35,7 +35,7 @@ export class UserController {
                   { ...user },
                   env.TOKEN_SECRET,
                   {
-                    expiresIn: '30m',
+                    expiresIn: '24h',
                   }
                 );
               console.log(accessToken);
