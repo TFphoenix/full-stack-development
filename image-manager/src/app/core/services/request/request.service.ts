@@ -15,7 +15,7 @@ export class RequestService {
     'Content-Type': 'application/json'
   });
 
-  constructor(private readonly _http: HttpClient, private readonly _router: Router) {}
+  constructor(private readonly _http: HttpClient, private readonly _router: Router) { }
 
   get<T = any>(url: string): Observable<any> {
     const headers = this.getHeaders();
@@ -44,6 +44,37 @@ export class RequestService {
         headers: headers,
         reportProgress: true
       })
+      .pipe(
+        catchError(error => {
+          if (error.status === 401) {
+            localStorage.removeItem(Constants.LocalStorage.authToken);
+            this._router.navigate(['/login']);
+            return of(null);
+          }
+        })
+      );
+  }
+
+  postImage<T = any>(url: string, body: File) {
+    // only need Authorization header
+    // fails if Content-Type header is present
+    const headers: HttpHeaders = new HttpHeaders(
+      {
+        'Authorization': `Bearer ${localStorage.getItem(Constants.LocalStorage.authToken)}`
+      }
+    );
+    const formData: FormData = new FormData();
+    formData.append('file', body, body.name);
+
+    return this._http
+      .post<T>(
+        this._baseUrl + url,
+        formData,
+        {
+          headers: headers,
+          reportProgress: true
+        }
+      )
       .pipe(
         catchError(error => {
           if (error.status === 401) {

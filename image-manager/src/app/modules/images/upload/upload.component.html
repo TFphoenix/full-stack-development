@@ -6,4 +6,10 @@
   <input #fileInput type="file" (change)="onImageUpload($event)" hidden />
 
   <img class="image box-shadow-center" [hidden]="!isImageUploaded" [src]="imageUrl" alt="Uploaded Image" />
+
+  <button (click)="onImageUploaded()" mat-raised-button color="secondary" [disabled]="!canSendImage()">
+    <mat-icon>send</mat-icon>
+    <span>Evaluate image</span>
+  </button>
+
 </div>

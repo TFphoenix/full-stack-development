@@ -8,7 +8,7 @@ import { RequestService } from '../request/request.service';
   providedIn: 'root'
 })
 export class ImagesRequestService {
-  constructor(private readonly _requestService: RequestService) {}
+  constructor(private readonly _requestService: RequestService) { }
 
   getAllImages(): Observable<IImage[]> {
     return this._requestService.get(Constants.ApiEndpoints.images);
@@ -20,5 +20,9 @@ export class ImagesRequestService {
 
   saveImages(id: string, images: IImage[]) {
     return this._requestService.post(Constants.ApiEndpoints.images, images);
+  }
+
+  uploadImage(image: File) {
+    return this._requestService.postImage(Constants.ApiEndpoints.images + '/upload', image);
   }
 }
