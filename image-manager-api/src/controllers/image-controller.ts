@@ -69,14 +69,15 @@ export class ImageController {
       const label = testData.labels.argMax(-1);
       const probabilities = model.predict(testxs);
       testxs.dispose();
-      console.log(probabilities.toString());
-      console.log(label.toString());
-      const predictedLabel = label.shape[0];
+      console.log('probabilities:', probabilities.toString());
+      console.log('label:', label.toString());
+      const predictedLabel = label.toString();
+      console.log('predictedLabel:', predictedLabel);
       return this.imageRepository.save(
         {
           name: uploadedImage.name,
           size: uploadedImage.size,
-          result: predictedLabel.toString(),
+          result: predictedLabel[predictedLabel.length - 2],
           download: 'Image was uploaded manually'
         }
       );
