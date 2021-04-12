@@ -19,7 +19,7 @@ exports.savelog = function (req, res) {
         }
     })["catch"](function (err) {
         console.error('ERROR:', err);
-        res.status(200).send(err);
+        res.status(500).send(err);
         return;
     });
     res.status(200).send(log);

@@ -25,8 +25,9 @@ exports.savelog = (req, res) => {
       .catch(
          err => {
             console.error('ERROR:', err);
-            return res.status(500).send(err);
+            res.status(500).send(err);
+            return;
          }
       );
-   return res.status(200).send(log);
+   res.status(200).send(log);
 };
