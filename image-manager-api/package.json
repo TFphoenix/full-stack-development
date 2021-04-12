@@ -9,13 +9,14 @@
     "start:debug": "npm run ts:node:debug"
   },
   "dependencies": {
+    "@google-cloud/functions-framework": "^1.7.1",
     "@nestjs/cli": "^7.6.0",
     "@nestjs/jwt": "^7.2.0",
     "@nestjs/passport": "^7.1.5",
     "@nestjs/swagger": "^4.8.0",
     "@nestjs/typeorm": "^7.1.5",
     "@tensorflow/tfjs-node": "^3.3.0",
-    "@types/bcrypt": "^3.0.0",
+    "@types/bcrypt": "^3.0.1",
     "@types/bcryptjs": "^2.4.2",
     "@types/passport-jwt": "^3.0.5",
     "@types/passport-local": "^1.0.33",
@@ -30,16 +31,16 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.5.1",
-    "reflect-metadata": "^0.1.10",
+    "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^4.1.6",
-    "typeorm": "^0.2.31"
+    "typeorm": "^0.2.32"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.1",
-    "@types/node": "^8.0.29",
+    "@types/node": "^8.10.66",
     "nodemon": "^2.0.7",
-    "ts-node": "3.3.0",
+    "ts-node": "^3.3.0",
     "ts-node-dev": "^1.1.6",
-    "typescript": "3.3.3333"
+    "typescript": "^3.3.3333"
   }
 }
