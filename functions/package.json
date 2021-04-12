@@ -1,0 +1,25 @@
+{
+	"name": "functions",
+	"version": "1.0.1",
+	"description": "project using Google Cloud Functions Framework",
+	"main": "index.js",
+	"scripts": {
+		"start": "functions-framework --target=savelog",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/TFphoenix/full-stack-development.git"
+	},
+	"author": "a3drian",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/TFphoenix/full-stack-development/issues"
+	},
+	"homepage": "https://github.com/TFphoenix/full-stack-development#readme",
+	"dependencies": {
+		"@google-cloud/datastore": "^6.3.1",
+		"@google-cloud/functions-framework": "^1.7.1",
+		"tsc": "^1.20150623.0"
+	}
+}
