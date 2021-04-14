@@ -18,7 +18,7 @@ exports.savelog = (req, res) => {
             data: {
                log: log,
                uid: datastore.int(uid),
-               time_create: datastore.int(Math.floor(new Date().getTime() / 1000))
+               createdAt: new Date()
             }
          }
       )
@@ -30,4 +30,27 @@ exports.savelog = (req, res) => {
          }
       );
    res.status(200).send(log);
+};
+
+exports.getLogs = async (req, res) => {
+   const query = datastore.createQuery(kindName);
+   let logs: [] = [];
+   await datastore
+      .runQuery(query)
+      .then(
+         (results) => {
+            console.log('results:', results);
+            console.log('results[0]:', results[0]);
+            logs = results[0];
+         }
+      )
+      .catch(
+         (err) => {
+            console.error('ERROR:', err);
+            res.status(500).send(err);
+            return;
+         }
+      );
+   console.log('logs:', logs);
+   res.status(200).json(logs);
 };
