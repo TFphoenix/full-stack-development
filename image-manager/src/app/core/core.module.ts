@@ -15,6 +15,7 @@ import { LoginLogoutGuard } from './guards/login-logout/login-logout.guard';
 import { AuthService } from './services/auth/auth.service';
 import { RequestService } from './services/request/request.service';
 import { FormsModule } from '@angular/forms';
+import { FunctionsRequestService } from './services/functions-request/functions-request.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { FormsModule } from '@angular/forms';
     // services
     AuthService,
     RequestService,
+    FunctionsRequestService,
     // guards
     AuthGuard,
     LoginLogoutGuard

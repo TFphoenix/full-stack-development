@@ -18,14 +18,17 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
-        pathMatch: 'full',
+        pathMatch: 'full'
       },
       {
         path: 'images',
-        loadChildren: () =>
-          import('./modules/images/images.module').then((m) => m.ImagesModule),
+        loadChildren: () => import('./modules/images/images.module').then(m => m.ImagesModule)
       },
-    ],
+      {
+        path: 'logs',
+        loadChildren: () => import('./modules/logs/logs.module').then(m => m.LogsModule)
+      }
+    ]
   },
   // empty layout routes
   {
@@ -36,22 +39,22 @@ const routes: Routes = [
         path: 'login',
         component: LoginComponent,
         pathMatch: 'full',
-        canActivate: [LoginLogoutGuard],
+        canActivate: [LoginLogoutGuard]
       },
       {
         path: 'logout',
         component: LogoutComponent,
         pathMatch: 'full',
-        canActivate: [LoginLogoutGuard],
-      },
-    ],
+        canActivate: [LoginLogoutGuard]
+      }
+    ]
   },
   // no layout routes
-  { path: '**', redirectTo: '/' }, // all unhandled routes redirect to this
+  { path: '**', redirectTo: '/' } // all unhandled routes redirect to this
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

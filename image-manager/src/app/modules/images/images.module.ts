@@ -9,7 +9,6 @@ import { UploadComponent } from './upload/upload.component';
 import { ImagesRequestService } from 'src/app/core/services/images-request/images-request.service';
 
 @NgModule({
-  providers: [ImagesRequestService],
   declarations: [HistoryComponent, UploadComponent],
   imports: [SharedModule, ImagesRoutingModule, MaterialModule]
 })

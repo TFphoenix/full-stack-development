@@ -5,23 +5,23 @@ import { environment } from 'src/environments/environment';
 import { Constants } from 'src/app/shared/constants';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { RequestType } from 'src/app/shared/enums/request-type.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
-  private readonly _baseUrl: string = environment.services.api;
   private readonly _headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json'
   });
 
-  constructor(private readonly _http: HttpClient, private readonly _router: Router) { }
+  constructor(private readonly _http: HttpClient, private readonly _router: Router) {}
 
-  get<T = any>(url: string): Observable<any> {
+  get<T = any>(url: string, requestType?: RequestType): Observable<any> {
     const headers = this.getHeaders();
 
     return this._http
-      .get<T>(this._baseUrl + url, {
+      .get<T>(this.getUrl(url, requestType), {
         headers: headers,
         reportProgress: true
       })
@@ -36,11 +36,11 @@ export class RequestService {
       );
   }
 
-  post<T = any>(url: string, body: any): Observable<any> {
+  post<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
     const headers = this.getHeaders();
 
     return this._http
-      .post<T>(this._baseUrl + url, body, {
+      .post<T>(this.getUrl(url, requestType), body, {
         headers: headers,
         reportProgress: true
       })
@@ -55,26 +55,20 @@ export class RequestService {
       );
   }
 
-  postImage<T = any>(url: string, body: File) {
+  postImage<T = any>(url: string, body: File, requestType?: RequestType) {
     // only need Authorization header
     // fails if Content-Type header is present
-    const headers: HttpHeaders = new HttpHeaders(
-      {
-        'Authorization': `Bearer ${localStorage.getItem(Constants.LocalStorage.authToken)}`
-      }
-    );
+    const headers: HttpHeaders = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem(Constants.LocalStorage.authToken)}`
+    });
     const formData: FormData = new FormData();
     formData.append('file', body, body.name);
 
     return this._http
-      .post<T>(
-        this._baseUrl + url,
-        formData,
-        {
-          headers: headers,
-          reportProgress: true
-        }
-      )
+      .post<T>(this.getUrl(url, requestType), formData, {
+        headers: headers,
+        reportProgress: true
+      })
       .pipe(
         catchError(error => {
           if (error.status === 401) {
@@ -86,20 +80,20 @@ export class RequestService {
       );
   }
 
-  postUnhandled<T = any>(url: string, body: any): Observable<any> {
+  postUnhandled<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
     const headers = this.getHeaders();
 
-    return this._http.post<T>(this._baseUrl + url, body, {
+    return this._http.post<T>(this.getUrl(url, requestType), body, {
       headers: headers,
       reportProgress: true
     });
   }
 
-  put<T = any>(url: string, body: any): Observable<any> {
+  put<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
     const headers = this.getHeaders();
 
     return this._http
-      .put<T>(this._baseUrl + url, body, {
+      .put<T>(this.getUrl(url, requestType), body, {
         headers: headers,
         reportProgress: true
       })
@@ -114,11 +108,11 @@ export class RequestService {
       );
   }
 
-  patch<T = any>(url: string, body: any): Observable<any> {
+  patch<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
     const headers = this.getHeaders().set('X-HTTP-Method-Override', 'PATCH');
 
     return this._http
-      .post<T>(this._baseUrl + url, body, {
+      .post<T>(this.getUrl(url, requestType), body, {
         headers: headers,
         reportProgress: true
       })
@@ -133,15 +127,15 @@ export class RequestService {
       );
   }
 
-  delete<T = any>(url: string, ids: string[] = null): Observable<any> {
+  delete<T = any>(url: string, ids: string[] = null, requestType?: RequestType): Observable<any> {
     const headers = this.getHeaders();
 
-    url = this._baseUrl + url;
+    url = this.getUrl(url, requestType);
 
     if (ids) {
       if (ids.length > 1) {
         // many ids to delete
-        return this._http.post<T>(`${this._baseUrl + url}:delete`, ids, {
+        return this._http.post<T>(`${this.getUrl(url, requestType)}:delete`, ids, {
           headers: headers,
           reportProgress: true
         });
@@ -149,7 +143,7 @@ export class RequestService {
 
       if (ids.length === 1) {
         // one id to delete and was provided in the ids param
-        url = `${this._baseUrl + url}/${ids[0]}`;
+        url = `${this.getUrl(url, requestType)}/${ids[0]}`;
       }
     }
 
@@ -167,6 +161,17 @@ export class RequestService {
           }
         })
       );
+  }
+
+  private getUrl(url: string, requestType: RequestType): string {
+    switch (requestType) {
+      case RequestType.Api:
+        return environment.services.api + url;
+      case RequestType.Functions:
+        return environment.services.functions + url;
+      default:
+        return environment.services.api + url;
+    }
   }
 
   private getHeaders() {

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   services: {
-    api: 'http://localhost:8080/api/'
+    api: 'http://localhost:8080/api/',
+    functions: 'https://us-central1-solar-nation-310516.cloudfunctions.net/'
   }
 };
 

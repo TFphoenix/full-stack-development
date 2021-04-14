@@ -7,4 +7,8 @@ export class Constants {
     login: 'users/login',
     images: 'images'
   };
+
+  public static readonly FunctionsEndpoints = {
+    logs: 'getLogs'
+  };
 }
