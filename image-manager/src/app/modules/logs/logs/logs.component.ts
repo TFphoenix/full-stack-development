@@ -16,7 +16,7 @@ export class LogsComponent implements OnInit {
 
   ngOnInit(): void {
     this._functionsRequestService.getAllLogs().subscribe(logs => {
-      this.dataSource = new MatTableDataSource<ILog>(logs);
+      this.dataSource.data = logs;
     });
   }
 }

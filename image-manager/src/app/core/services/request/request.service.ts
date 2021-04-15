@@ -11,14 +11,10 @@ import { RequestType } from 'src/app/shared/enums/request-type.enum';
   providedIn: 'root'
 })
 export class RequestService {
-  private readonly _headers: HttpHeaders = new HttpHeaders({
-    'Content-Type': 'application/json'
-  });
-
   constructor(private readonly _http: HttpClient, private readonly _router: Router) {}
 
   get<T = any>(url: string, requestType?: RequestType): Observable<any> {
-    const headers = this.getHeaders();
+    const headers = this.getHeaders(requestType);
 
     return this._http
       .get<T>(this.getUrl(url, requestType), {
@@ -37,7 +33,7 @@ export class RequestService {
   }
 
   post<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
-    const headers = this.getHeaders();
+    const headers = this.getHeaders(requestType);
 
     return this._http
       .post<T>(this.getUrl(url, requestType), body, {
@@ -58,9 +54,7 @@ export class RequestService {
   postImage<T = any>(url: string, body: File, requestType?: RequestType) {
     // only need Authorization header
     // fails if Content-Type header is present
-    const headers: HttpHeaders = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem(Constants.LocalStorage.authToken)}`
-    });
+    const headers: HttpHeaders = this.getHeaders(requestType);
     const formData: FormData = new FormData();
     formData.append('file', body, body.name);
 
@@ -81,7 +75,7 @@ export class RequestService {
   }
 
   postUnhandled<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
-    const headers = this.getHeaders();
+    const headers = this.getHeaders(requestType);
 
     return this._http.post<T>(this.getUrl(url, requestType), body, {
       headers: headers,
@@ -90,7 +84,7 @@ export class RequestService {
   }
 
   put<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
-    const headers = this.getHeaders();
+    const headers = this.getHeaders(requestType);
 
     return this._http
       .put<T>(this.getUrl(url, requestType), body, {
@@ -109,7 +103,7 @@ export class RequestService {
   }
 
   patch<T = any>(url: string, body: any, requestType?: RequestType): Observable<any> {
-    const headers = this.getHeaders().set('X-HTTP-Method-Override', 'PATCH');
+    const headers = this.getHeaders(requestType).set('X-HTTP-Method-Override', 'PATCH');
 
     return this._http
       .post<T>(this.getUrl(url, requestType), body, {
@@ -128,7 +122,7 @@ export class RequestService {
   }
 
   delete<T = any>(url: string, ids: string[] = null, requestType?: RequestType): Observable<any> {
-    const headers = this.getHeaders();
+    const headers = this.getHeaders(requestType);
 
     url = this.getUrl(url, requestType);
 
@@ -174,7 +168,18 @@ export class RequestService {
     }
   }
 
-  private getHeaders() {
-    return this._headers.append('Authorization', `Bearer ${localStorage.getItem(Constants.LocalStorage.authToken)}`);
+  private getHeaders(requestType: RequestType) {
+    const defaultHeaders = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem(Constants.LocalStorage.authToken)}`
+    });
+
+    switch (requestType) {
+      case RequestType.Api:
+        return defaultHeaders;
+      case RequestType.Functions:
+        return new HttpHeaders();
+      default:
+        return defaultHeaders;
+    }
   }
 }

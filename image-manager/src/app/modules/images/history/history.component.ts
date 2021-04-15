@@ -18,7 +18,7 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this._imagesRequestService.getAllImages().subscribe(images => {
-      this.dataSource = new MatTableDataSource<IImage>(images);
+      this.dataSource.data = images;
     });
   }
 
