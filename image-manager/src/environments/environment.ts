@@ -5,8 +5,10 @@
 export const environment = {
   production: false,
   services: {
-    api: 'http://localhost:8080/api/',
-    functions: 'https://us-central1-solar-nation-310516.cloudfunctions.net/'
+    api: 'http://localhost:8485/api/',
+    // functions: 'https://us-central1-solar-nation-310516.cloudfunctions.net/'
+    // REMEMBER: Uncomment this for local testing purposes of the functions project
+    functions: 'http://localhost:8080/'
   }
 };
 
