@@ -8,7 +8,7 @@ const datastore = new Datastore({
 });
 
 const kindName = "user-log";
-exports.savelog = (req, res) => {
+export async function savelog(req, res) {
   let uid = req.query.uid || req.body.uid || 0;
   let log = req.query.log || req.body.log || "";
   datastore
@@ -26,9 +26,9 @@ exports.savelog = (req, res) => {
       return;
     });
   res.status(200).send(log);
-};
+}
 
-exports.getLogs = async (req, res) => {
+export async function getLogs(req, res) {
   setCors(res);
   const query = datastore.createQuery(kindName);
   let logs: [] = [];
@@ -46,7 +46,7 @@ exports.getLogs = async (req, res) => {
     });
   console.log("logs:", logs);
   res.status(200).json(logs);
-};
+}
 
 function setCors(res) {
   res.set("Access-Control-Allow-Origin", "*");
