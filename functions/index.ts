@@ -8,6 +8,7 @@ const datastore = new Datastore({
 });
 
 const kindName = "user-log";
+
 export async function savelog(req, res) {
   let uid = req.query.uid || req.body.uid || 0;
   let log = req.query.log || req.body.log || "";
@@ -26,7 +27,7 @@ export async function savelog(req, res) {
       return;
     });
   res.status(200).send(log);
-}
+};
 
 export async function getLogs(req, res) {
   setCors(res);
@@ -46,10 +47,10 @@ export async function getLogs(req, res) {
     });
   console.log("logs:", logs);
   res.status(200).json(logs);
-}
+};
 
 function setCors(res) {
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "*");
   res.set("Access-Control-Allow-Headers", "*");
-}
+};

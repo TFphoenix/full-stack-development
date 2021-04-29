@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
+exports.__esModule = true;
+exports.getLogs = exports.savelog = void 0;
 // Imports the Google Cloud client library
 var Datastore = require("@google-cloud/datastore").Datastore;
 // Creates a client
@@ -43,53 +45,66 @@ var datastore = new Datastore({
     keyFilename: "solar-nation-310516-9dfd55b6467a.json"
 });
 var kindName = "user-log";
-exports.savelog = function (req, res) {
-    var uid = req.query.uid || req.body.uid || 0;
-    var log = req.query.log || req.body.log || "";
-    datastore
-        .save({
-        key: datastore.key(kindName),
-        data: {
-            log: log,
-            uid: datastore.int(uid),
-            createdAt: new Date()
-        }
-    })["catch"](function (err) {
-        console.error("ERROR:", err);
-        res.status(500).send(err);
-        return;
+function savelog(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var uid, log;
+        return __generator(this, function (_a) {
+            uid = req.query.uid || req.body.uid || 0;
+            log = req.query.log || req.body.log || "";
+            datastore
+                .save({
+                key: datastore.key(kindName),
+                data: {
+                    log: log,
+                    uid: datastore.int(uid),
+                    createdAt: new Date()
+                }
+            })["catch"](function (err) {
+                console.error("ERROR:", err);
+                res.status(500).send(err);
+                return;
+            });
+            res.status(200).send(log);
+            return [2 /*return*/];
+        });
     });
-    res.status(200).send(log);
-};
-exports.getLogs = function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-    var query, logs;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                setCors(res);
-                query = datastore.createQuery(kindName);
-                logs = [];
-                return [4 /*yield*/, datastore
-                        .runQuery(query)
-                        .then(function (results) {
-                        console.log("results:", results);
-                        console.log("results[0]:", results[0]);
-                        logs = results[0];
-                    })["catch"](function (err) {
-                        console.error("ERROR:", err);
-                        res.status(500).send(err);
-                        return;
-                    })];
-            case 1:
-                _a.sent();
-                console.log("logs:", logs);
-                res.status(200).json(logs);
-                return [2 /*return*/];
-        }
+}
+exports.savelog = savelog;
+;
+function getLogs(req, res) {
+    return __awaiter(this, void 0, void 0, function () {
+        var query, logs;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    setCors(res);
+                    query = datastore.createQuery(kindName);
+                    logs = [];
+                    return [4 /*yield*/, datastore
+                            .runQuery(query)
+                            .then(function (results) {
+                            console.log("results:", results);
+                            console.log("results[0]:", results[0]);
+                            logs = results[0];
+                        })["catch"](function (err) {
+                            console.error("ERROR:", err);
+                            res.status(500).send(err);
+                            return;
+                        })];
+                case 1:
+                    _a.sent();
+                    console.log("logs:", logs);
+                    res.status(200).json(logs);
+                    return [2 /*return*/];
+            }
+        });
     });
-}); };
+}
+exports.getLogs = getLogs;
+;
 function setCors(res) {
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "*");
     res.set("Access-Control-Allow-Headers", "*");
 }
+;
