@@ -8,7 +8,7 @@ run_build:
   script:
     - cd functions
     - npm install
-    - tsc index.ts && node index.js
+    - npx tsc index.ts && node index.js
 
 deploy_gcloud:
   image: node:14
