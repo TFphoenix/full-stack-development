@@ -27,7 +27,7 @@ export async function savelog(req, res) {
       return;
     });
   res.status(200).send(log);
-};
+}
 
 export async function getLogs(req, res) {
   setCors(res);
@@ -36,7 +36,7 @@ export async function getLogs(req, res) {
   await datastore
     .runQuery(query)
     .then((results) => {
-      console.log("results:", results);
+      console.log("results :", results);
       console.log("results[0]:", results[0]);
       logs = results[0];
     })
@@ -47,10 +47,10 @@ export async function getLogs(req, res) {
     });
   console.log("logs:", logs);
   res.status(200).json(logs);
-};
+}
 
 function setCors(res) {
   res.set("Access-Control-Allow-Origin", "*");
   res.set("Access-Control-Allow-Methods", "*");
   res.set("Access-Control-Allow-Headers", "*");
-};
+}
