@@ -29,24 +29,30 @@ export async function savelog(req, res) {
   res.status(200).send(log);
 }
 
-export async function getLogs(req, res) {
+export async function getLogs(req: any, res: any) {
   setCors(res);
   const query = datastore.createQuery(kindName);
   let logs: [] = [];
   await datastore
     .runQuery(query)
-    .then((results) => {
+    .then((results: any) => {
       console.log("results:", results);
       console.log("results[0]:", results[0]);
       logs = results[0];
     })
-    .catch((err) => {
+    .catch((err: any) => {
       console.error("ERROR:", err);
       res.status(500).send(err);
       return;
     });
   console.log("logs:", logs);
   res.status(200).json(logs);
+}
+
+function setCors(res: any) {
+  res.set("Access-Control-Allow-Origin", "*");
+  res.set("Access-Control-Allow-Methods", "*");
+  res.set("Access-Control-Allow-Headers", "*");
 }
 
 const cors = require("cors")({ origin: true });
@@ -64,10 +70,4 @@ export async function helloWorld(req: any, res: any) {
 
     res.send(users);
   });
-}
-
-function setCors(res) {
-  res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "*");
-  res.set("Access-Control-Allow-Headers", "*");
 }
