@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.helloWorld = exports.getLogs = exports.savelog = void 0;
+exports.getLogs = exports.savelog = void 0;
 // Imports the Google Cloud client library
 var Datastore = require("@google-cloud/datastore").Datastore;
 // Creates a client
@@ -105,32 +105,3 @@ function setCors(res) {
     res.set("Access-Control-Allow-Methods", "*");
     res.set("Access-Control-Allow-Headers", "*");
 }
-var cors = require("cors")({ origin: true });
-function helloWorld(req, res) {
-    return __awaiter(this, void 0, void 0, function () {
-        var _this = this;
-        return __generator(this, function (_a) {
-            cors(req, res, function () { return __awaiter(_this, void 0, void 0, function () {
-                var query, users, _i, users_1, user, userKey;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            query = datastore.createQuery("user");
-                            return [4 /*yield*/, datastore.runQuery(query)];
-                        case 1:
-                            users = (_a.sent())[0];
-                            for (_i = 0, users_1 = users; _i < users_1.length; _i++) {
-                                user = users_1[_i];
-                                userKey = user[datastore.KEY];
-                                console.log(userKey.id, user);
-                            }
-                            res.send(users);
-                            return [2 /*return*/];
-                    }
-                });
-            }); });
-            return [2 /*return*/];
-        });
-    });
-}
-exports.helloWorld = helloWorld;

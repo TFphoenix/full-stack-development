@@ -54,20 +54,3 @@ function setCors(res: any) {
   res.set("Access-Control-Allow-Methods", "*");
   res.set("Access-Control-Allow-Headers", "*");
 }
-
-const cors = require("cors")({ origin: true });
-
-export async function helloWorld(req: any, res: any) {
-  cors(req, res, async () => {
-    const query = datastore.createQuery("user");
-
-    let [users] = await datastore.runQuery(query);
-
-    for (const user of users) {
-      const userKey = user[datastore.KEY];
-      console.log(userKey.id, user);
-    }
-
-    res.send(users);
-  });
-}
