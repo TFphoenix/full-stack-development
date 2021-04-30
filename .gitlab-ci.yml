@@ -31,7 +31,7 @@ deploy_gcloud:
     - python --version
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
     - ls -ls
-    - gcloud --quiet --project $PROJECT_ID functions deploy getLogs --entry-point getLogs --runtime nodejs14 --trigger-http --allow-unauthenticated --source functions/
+    - gcloud --quiet --project $PROJECT_ID functions deploy helloWorld  --entry-point helloWorld  --runtime nodejs14 --trigger-http --allow-unauthenticated --source functions/
     #- gcloud --quiet --project $PROJECT_ID alpha functions add-iam-policy-binding helloWorld --member=allUsers --role=roles/cloudfunctions.invoker
 
 deploy_production:
@@ -42,6 +42,6 @@ deploy_production:
   script:
     - echo $SERVICE_ACCOUNT > /tmp/$CI_PIPELINE_ID.json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-    - gcloud --quiet --project $PROJECT_ID functions deploy getLogs --runtime node:14 --trigger-http
+    - gcloud --quiet --project $PROJECT_ID functions deploy helloWorld  --runtime node:14 --trigger-http
   after_script:
     - rm /tmp/$CI_PIPELINE_ID.json

@@ -36,75 +36,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getLogs = exports.savelog = void 0;
-// Imports the Google Cloud client library
+exports.helloWorld = void 0;
 var Datastore = require("@google-cloud/datastore").Datastore;
-// Creates a client
-var datastore = new Datastore({
+var dataStore = new Datastore({
     projectId: "solar-nation-310516",
     keyFilename: "solar-nation-310516-9dfd55b6467a.json"
 });
-var kindName = "user-log";
-function savelog(req, res) {
+var cors = require("cors")({ origin: true });
+function helloWorld(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var uid, log;
+        var _this = this;
         return __generator(this, function (_a) {
-            uid = req.query.uid || req.body.uid || 0;
-            log = req.query.log || req.body.log || "";
-            datastore
-                .save({
-                key: datastore.key(kindName),
-                data: {
-                    log: log,
-                    uid: datastore.int(uid),
-                    createdAt: new Date()
-                }
-            })["catch"](function (err) {
-                console.error("ERROR:", err);
-                res.status(500).send(err);
-                return;
-            });
-            res.status(200).send(log);
+            cors(req, res, function () { return __awaiter(_this, void 0, void 0, function () {
+                var query, users, _i, users_1, user, userKey;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            query = dataStore.createQuery("user");
+                            return [4 /*yield*/, dataStore.runQuery(query)];
+                        case 1:
+                            users = (_a.sent())[0];
+                            for (_i = 0, users_1 = users; _i < users_1.length; _i++) {
+                                user = users_1[_i];
+                                userKey = user[dataStore.KEY];
+                                console.log(userKey.id, user);
+                            }
+                            res.send(users);
+                            return [2 /*return*/];
+                    }
+                });
+            }); });
             return [2 /*return*/];
         });
     });
 }
-exports.savelog = savelog;
-;
-function getLogs(req, res) {
-    return __awaiter(this, void 0, void 0, function () {
-        var query, logs;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    setCors(res);
-                    query = datastore.createQuery(kindName);
-                    logs = [];
-                    return [4 /*yield*/, datastore
-                            .runQuery(query)
-                            .then(function (results) {
-                            console.log("results:", results);
-                            console.log("results[0]:", results[0]);
-                            logs = results[0];
-                        })["catch"](function (err) {
-                            console.error("ERROR:", err);
-                            res.status(500).send(err);
-                            return;
-                        })];
-                case 1:
-                    _a.sent();
-                    console.log("logs:", logs);
-                    res.status(200).json(logs);
-                    return [2 /*return*/];
-            }
-        });
-    });
-}
-exports.getLogs = getLogs;
-;
-function setCors(res) {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "*");
-    res.set("Access-Control-Allow-Headers", "*");
-}
-;
+exports.helloWorld = helloWorld;
